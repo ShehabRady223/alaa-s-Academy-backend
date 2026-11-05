@@ -7,15 +7,15 @@ import { env } from './env';
 //   console.log('MongoDB connected');
 // }
 
-let isConnected = false; 
+let isConnected = false;
 
-export const connectDB = async () => {
+export async function connectDb(): Promise<void> {
   if (isConnected) {
     return;
   }
   try {
     const opts = {
-      dbName:'Exam'
+      dbName: 'Exam'
     };
     await mongoose.connect(env.MONGO_URI, opts);
     isConnected = true;
