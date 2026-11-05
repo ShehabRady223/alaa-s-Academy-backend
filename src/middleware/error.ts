@@ -2,13 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { isProd } from '../config/env';
 import { AppError } from '../utils/errors';
+import { connectDb } from '../config/db';
 
 export function notFoundHandler(_req: Request, res: Response) {
   res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Route not found' } });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
+export async function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
+  await connectDb();
   if (err instanceof ZodError) {
     return res.status(400).json({
       error: {
