@@ -10,7 +10,7 @@ export function notFoundHandler(_req: Request, res: Response) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
-  await connectDb();
+  // await connectDb();
   if (err instanceof ZodError) {
     return res.status(400).json({
       error: {
